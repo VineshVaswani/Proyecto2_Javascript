@@ -1,5 +1,5 @@
 // Creamos la funcion para crear la encuesta con pregunta y opciones
-function crearEncuesta (pregunta, opciones){
+function crearEncuesta (pregunta, opciones) {
   return {
     pregunta,
     opciones,
@@ -7,19 +7,7 @@ function crearEncuesta (pregunta, opciones){
   };
 }
 
-// array, con todas las preguntas de la encuesta agrupadas en 1 constante
-const encuestas = [
-  crearEncuesta ("pregunta 1", ["opcion 1", "opcion 2", "opcion 3"]),
-  crearEncuesta ("pregunta 2", ["opcion 1", "opcion 2", "opcion 3"]),
-  crearEncuesta ("pregunta 3", ["opcion 1", "opcion 2", "opcion 3"]),
-  crearEncuesta ("pregunta 4", ["opcion 1", "opcion 2", "opcion 3"]),
-  crearEncuesta ("pregunta 5", ["opcion 1", "opcion 2", "opcion 3"]),
-  crearEncuesta ("pregunta 6", ["opcion 1", "opcion 2", "opcion 3"]),
-  crearEncuesta ("pregunta 7", ["opcion 1", "opcion 2", "opcion 3"]),
-  crearEncuesta ("pregunta 8", ["opcion 1", "opcion 2", "opcion 3"])
-];
-
-// crear la funcin para votar
+// Crear la funcion para votar
 
 function votar (encuesta, indiceOpcion){
   if (typeof indiceOpcion !== "number" || indiceOpcion < 0 || indiceOpcion >= encuesta.opciones.length) {
@@ -40,6 +28,33 @@ function votar (encuesta, indiceOpcion){
   
 }
 
+// Pedir preguntas
+
+let cantidadPreguntas = parseInt(prompt("¿Cuantas preguntas quieres que tenga la encuesta? (minimo 8)"));
+
+while (isNaN(cantidadPreguntas) || cantidadPreguntas < 8) {
+  console.log("Debes ingresar al menos 8 preguntas")
+  cantidadPreguntas = parseInt(prompt("¿Cuantas preguntas quieres que tenga la encuesta? (minimo 8)"));
+}
+
+// Crear las encuestas
+
+const encuestas = [];
+
+for (let i = 0; i < cantidadPreguntas; i++) {
+  const pregunta = prompt(`Pregunta ${i+1}`);
+  const opcionesTexto = prompt(`Escribe 3 opciones separadas por comas (ej. azul, rojo, verde)`);
+  const opciones = opcionesTexto.split(",").map(opcion => opcion.trim());
+
+  if (opciones.length !== 3) {
+    console.log ("Debes ingresar exactamente 3 opciones. Reintentando esta pregunta...");
+    i--;
+    continue;
+  }
+
+  encuestas.push(crearEncuesta(pregunta, opciones));
+}
+
 encuestas.forEach ((encuesta, index) => {
 
   // Mnsaje que sale al usuario con espacio
@@ -51,8 +66,8 @@ encuestas.forEach ((encuesta, index) => {
 
 // Pedir respuesta por prompt y transformar en numero
 
-const entrada = prompt (mensaje);
-const voto = parseInt (entrada);
+const entradaVoto = prompt (mensaje);
+const voto = parseInt (entradaVoto);
 
 // Verificacion de voto
 

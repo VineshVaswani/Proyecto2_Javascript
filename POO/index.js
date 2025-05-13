@@ -32,16 +32,32 @@ class Encuesta {
     }
 }
 
-const encuesta1 = new Encuesta("pregunta 1", ["opcion 1", "opcion 2", "opcion 3"])
-const encuesta2 = new Encuesta("pregunta 2", ["opcion 1", "opcion 2", "opcion 3"])
-const encuesta3 = new Encuesta("pregunta 3", ["opcion 1", "opcion 2", "opcion 3"])
-const encuesta4 = new Encuesta("pregunta 4", ["opcion 1", "opcion 2", "opcion 3"])
-const encuesta5 = new Encuesta("pregunta 5", ["opcion 1", "opcion 2", "opcion 3"])
-const encuesta6 = new Encuesta("pregunta 6", ["opcion 1", "opcion 2", "opcion 3"])
-const encuesta7 = new Encuesta("pregunta 7", ["opcion 1", "opcion 2", "opcion 3"])
-const encuesta8 = new Encuesta("pregunta 8", ["opcion 1", "opcion 2", "opcion 3"])
+// Pedir preguntas
 
-const encuestas = [encuesta1,encuesta2,encuesta3,encuesta4,encuesta5, encuesta6,encuesta7,encuesta8]
+let cantidadPreguntas = parseInt(prompt("¿Cuantas preguntas quieres que tenga la encuesta? (minimo 8)"));
+
+while (isNaN(cantidadPreguntas) || cantidadPreguntas < 8) {
+  console.log("Debes ingresar al menos 8 preguntas")
+  cantidadPreguntas = parseInt(prompt("¿Cuantas preguntas quieres que tenga la encuesta? (minimo 8)"));
+}
+
+// Crear las encuestas
+
+const encuestas = [];
+
+for (let i = 0; i < cantidadPreguntas; i++) {
+  const pregunta = prompt(`Pregunta ${i+1}`);
+  const opcionesTexto = prompt(`Escribe 3 opciones separadas por comas (ej. azul, rojo, verde)`);
+  const opciones = opcionesTexto.split(",").map(opcion => opcion.trim());
+
+  if (opciones.length !== 3) {
+    console.log ("Debes ingresar exactamente 3 opciones. Reintentando esta pregunta...");
+    i--;
+    continue;
+  }
+
+    encuestas.push(new Encuesta(pregunta, opciones));
+}
 
 // For each -> recorrer todas las encuestas y mostar al usuario la pregunta de la encusta en la que esta
 
@@ -65,7 +81,7 @@ encuesta.opciones.forEach((opcion, indice) => {
 
 //solicitar respuesta al usuario
 
-const entrada = prompt("Ingresa el número de tu opción:");
+const entrada = prompt(mensaje);
 const voto = parseInt (entrada);
 
 // Registrar voto
